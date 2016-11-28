@@ -1,0 +1,36 @@
+# Project
+*.dSYM
+*.swp
+
+# npm
+node_modules
+*.log
+*.log.*
+*.gz
+
+# bower
+bower_components
+
+# OS X
+.DS_Store*
+Icon?
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory
+*~
+
+# Idea
+.idea
+
+# Binary
+bin/fdiff
+bin/sandbox_exec
+
+# Config
+server/config_local.js
