@@ -28,7 +28,6 @@ module.exports = function(dataPath, cfg) {
             return self.callback(err);
         }
         var curCmd = self.tus[self.tusStep];
-        console.log('Step ' + self.tusStep + ' done');
         var curMod = cmdMap[curCmd.cmd];
         if (!curMod) {
             var errInfo = 'Unknow tus command ' + curCmd.cmd + ' at step ' + self.tusStep;
@@ -43,7 +42,7 @@ module.exports = function(dataPath, cfg) {
             if (!data.tusStep) {
                 data.tusStep = self.tusStep;
             }
-            if (!data.cmd) {
+			if (!data.cmd) {
                 if (self.tus[self.tusStep]) {
                     data.cmd = self.tus[self.tusStep].cmd;
                 } else {
@@ -52,6 +51,11 @@ module.exports = function(dataPath, cfg) {
             }
             self.respond(data, next);
         }, function(error) {
+			console.log('Step ' + self.tusStep + ': ' + curCmd.cmd + ' done');
+			if (error) {
+				console.error('With error');
+				console.error(error);
+			}
             ++ self.tusStep;
             self.interpret(error);
         });
@@ -68,12 +72,23 @@ module.exports = function(dataPath, cfg) {
 		self.res = {};
         self.scores = [];
 		self.sources = [];
-        self.updateSource = function(id, callback) {
+        self.updateSource = function(id, zipPath, callback) {
+			if (typeof(zipPath) === 'function') {
+				callback = zipPath;
+				zipPath = null;
+			}
             if (!self.sources[id]) {
                 if (typeof(req.source_url) == 'string') {
                     req.source_url = [ req.source_url ];
                 }
-                if (typeof(req.source_url) == 'object' && req.source_url[id]) {
+                if (typeof(req.source_url) == 'object' && req.source_url[id] && zipPath !== null) {
+					request(req.source_url[id]).pipe(fs.createWriteStream(zipPath))
+						.on('error', function(err) {
+							callback(err);
+						}).on('close', function() {
+							callback(false);
+						});
+				} else if (typeof(req.source_url) == 'object' && req.source_url[id]) {
                     request.get({
                         url: req.source_url[id]
                     }, function(err, httpRespond, bodyStr) {
@@ -91,6 +106,14 @@ module.exports = function(dataPath, cfg) {
         };
         try {
             self.tus = JSON.parse(fs.readFileSync(path.resolve(self.dataPath, 'tus.json')));
+			while (true) {
+				try {
+					fs.readdirSync(self.path);
+				} catch (error) {
+                    break;
+				}
+				self.path += 'r';
+            }
             fs.mkdirSync(self.path);
             self.lang = req.lang;
             if (typeof(self.tus) != 'object' || self.tus.length > self.cfg.maxLines) {

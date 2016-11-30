@@ -5,7 +5,6 @@ module.exports = function(source, workPath, target, oargs) {
     if (typeof(args) == 'string') {
         args = args.split(' ');
     }
-    fs.writeFileSync(path.resolve(workPath, 'source.zip'), source);
     var args = [];
     if (typeof(oargs) == 'string') {
         args = oargs.split(' ');
@@ -18,7 +17,7 @@ module.exports = function(source, workPath, target, oargs) {
     }
     args.push('source.zip');
     args.push('-d');
-    args.push(target);
+    args.push('.');
     var ret = {
         fileName: 'unzip',
         args: args

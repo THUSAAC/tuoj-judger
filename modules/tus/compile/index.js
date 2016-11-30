@@ -56,7 +56,11 @@ module.exports = function(cmd, data) {
             targetPath = self.path;
         }
         var langFunc = langMods[self.lang];
-        data.updateSource(cmd.sourceId, function(err) {
+		var zipPath = null;
+		if (self.lang === 'answerzip') {
+			zipPath = path.resolve(self.path, 'source.zip');
+		}
+        data.updateSource(cmd.sourceId, zipPath, function(err) {
             if (err) {
                 return callback(err);
             }

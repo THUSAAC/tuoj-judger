@@ -4,8 +4,8 @@
 //#define DEFAULT_HOME_PATH "/home/judger"
 //#define DEFAULT_HOME_PATH "/home/toby/Workspace/tuoj/judger/utils/sandbox/ccsp"
 #ifdef NOMHY
-#define DEFAULT_HOME_PATH "/home/laekov/TUOJ/judger/utils/sandbox/ccsp"
-#define DEFAULT_WHITELIST_PATH "/home/laekov/TUOJ/judger/utils/sandbox/ccsp/bin/whitelist"
+#define DEFAULT_HOME_PATH "/home/laekov/tuoj/tuoj-judger/utils/sandbox"
+#define DEFAULT_WHITELIST_PATH "/home/laekov/tuoj/tuoj-judger/utils/sandbox/whitelist"
 #define HOME_PATH "."
 #define RUN_PATH HOME_PATH ""
 #define SHARED_PATH HOME_PATH ""

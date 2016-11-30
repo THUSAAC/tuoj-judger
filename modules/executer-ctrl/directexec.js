@@ -21,7 +21,7 @@ var Executer = function() {
         ];
     }
     self.exec = function(options) {
-        var cmdl = options.fileName;
+		var cmdl = options.fileName;
         for (var i in options.args) {
             if (typeof(options.args[i]) == 'string') {
                 cmdl += ' ' + options.args[i];
@@ -35,7 +35,7 @@ var Executer = function() {
 				cmdl += ' 2>' + stderr;
 			}
         }*/
-        var args = [cmdl];
+        var args = [ cmdl ];
         if (options.timeLimit) {
             args.push('-t');
             args.push(String(options.timeLimit));

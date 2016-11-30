@@ -13,6 +13,8 @@ module.exports = function(cmd, data) {
     self.path = path.resolve(data.path, 'j' + self.id);
 	if (cmd.ansId == 'last') {
 		self.source = data.res[self.id - 1];
+	} else if (data.lang === 'answerzip') {
+		self.source = data.res[0]; // TODO fix this number through portocol
     } else {
         self.source = data.res[cmd.ansId];
     }
@@ -25,11 +27,16 @@ module.exports = function(cmd, data) {
         self.respond = sysRespond;
         var respond = function(res, callback) {
 			res.judgeStep = self.judgeStep;
-            res.time = self.source.time;
-            res.memory = self.source.memory;
-            if (self.source.error) {
-                res.message = self.source.error;
-            }
+			if (self.source) {
+				res.time = self.source.time;
+				res.memory = self.source.memory;
+				if (self.source.error) {
+					res.message = self.source.error;
+				}
+			} else {
+				res.time = 0;
+				res.memory = 0
+			}
             self.respond(res, callback);
         }
         var targetPath = path.resolve(self.path, 'res');
@@ -52,7 +59,7 @@ module.exports = function(cmd, data) {
                 fs.copySync(path.resolve(self.dataPath, file), ansPath);
             });
 			if (data.lang == 'answerzip') {
-                var answerPath = path.resolve(self.source.target, self.ansId + '.out');
+                var answerPath = path.resolve(self.source.target, (Number(self.cmd.ansId) + 1) + '.out');
 				fs.copySync(answerPath, path.resolve(self.path, 'out'));
 			} else {
 				fs.copySync(self.source.target, path.resolve(self.path, 'out'));
@@ -70,7 +77,7 @@ module.exports = function(cmd, data) {
         } catch (error) {
             respond({ message: 'Wrong Answer', extError: error, isEnd: self.cmd.haltOnFail, tusStep: self.tusStep }, function() {
                 data.scores.push({
-                    error: self.source.error,
+					error: self.source ? self.source.error : 'Wrong Answer',
                     score: 0
                 });
                 return callback(cmd.haltOnFail);
