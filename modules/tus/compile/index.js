@@ -4,9 +4,11 @@ var exec = require('../../../modules/executer-ctrl');
 
 var langMods = { 
     'g++': require('./g++'),
-    //'gcc': require('./gcc'),
+    'gcc': require('./gcc'),
+    'pascal': require('./pascal'),
     'java': require('./java'),
-    'answer': require('./answer')
+    'answer': require('./answer'),
+    'answerzip': require('./answerzip'),
 };
 
 module.exports = function(cmd, data) {
@@ -49,6 +51,8 @@ module.exports = function(cmd, data) {
         }
         var targetPath = path.resolve(self.path, 'exe');
         if (self.lang == 'java') {
+            targetPath = self.path;
+        } else if (self.lang == 'answerzip') {
             targetPath = self.path;
         }
         var langFunc = langMods[self.lang];

@@ -51,7 +51,12 @@ module.exports = function(cmd, data) {
                 var ansPath = path.resolve(self.path, String(i) + '.ans');
                 fs.copySync(path.resolve(self.dataPath, file), ansPath);
             });
-            fs.copySync(self.source.target, path.resolve(self.path, 'out'));
+			if (data.lang == 'answerzip') {
+                var answerPath = path.resolve(self.source.target, self.ansId + '.out');
+				fs.copySync(answerPath, path.resolve(self.path, 'out'));
+			} else {
+				fs.copySync(self.source.target, path.resolve(self.path, 'out'));
+			}
             fs.copySync(self.checker, path.resolve(self.path, 'checker'));
             fs.chmodSync(path.resolve(self.path, 'checker'), 0755);
             fs.writeFileSync(path.resolve(self.path, 'fullScore'), '100');
