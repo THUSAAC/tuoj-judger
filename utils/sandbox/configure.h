@@ -1,8 +1,6 @@
 #ifndef __TUOJ_CONFIGURE_H__
 #define __TUOJ_CONFIGURE_H__
 
-//#define DEFAULT_HOME_PATH "/home/judger"
-//#define DEFAULT_HOME_PATH "/home/toby/Workspace/tuoj/judger/utils/sandbox/ccsp"
 #ifdef NOMHY
 #define DEFAULT_HOME_PATH "/home/laekov/tuoj/tuoj-judger/utils/sandbox"
 #define DEFAULT_WHITELIST_PATH "/home/laekov/tuoj/tuoj-judger/utils/sandbox/whitelist"
@@ -11,12 +9,12 @@
 #define SHARED_PATH HOME_PATH ""
 #define TMP_PATH HOME_PATH ""
 #else
-#define DEFAULT_HOME_PATH "/home/mhy12345/tuoj/judger/utils/sandbox/ccsp"
-#define DEFAULT_WHITELIST_PATH "/home/mhy12345/tuoj/judger/utils/sandbox/ccsp/bin/whitelist"
-#define HOME_PATH "/home/judger"
-#define RUN_PATH HOME_PATH "/run"
-#define SHARED_PATH HOME_PATH "/shared"
-#define TMP_PATH HOME_PATH "/tmp"
+#define DEFAULT_HOME_PATH "/home/mhy12345/thusaac/utils/sandbox"
+#define DEFAULT_WHITELIST_PATH "/home/mhy12345/thusaac/utils/sandbox/whitelist"
+#define HOME_PATH "/home/mhy12345/thusaac/utils/sandbox"
+#define RUN_PATH HOME_PATH ""
+#define SHARED_PATH HOME_PATH ""
+#define TMP_PATH HOME_PATH ""
 #endif
 #define MAXBUF 250
 

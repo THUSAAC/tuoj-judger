@@ -12,6 +12,13 @@ for item in filelist:
         print "g++ %s -o %s"%(sampledir+"/"+pname,sampledir+"/"+ename)
         os.system("./sandbox_exec -p \"%s\" -w -o cpp \"%s\""%(sampledir,ename))
         print "./sandbox_exec -p \"%s\" -w -o cpp \"%s\""%(sampledir,ename)
+    if (item[-3:] == "pas"):
+        pname = item
+        ename = item[0:-4]
+        os.system("fpc %s "%(sampledir+"/"+pname))
+        print "fpc %s "%(sampledir+"/"+pname)
+        os.system("./sandbox_exec -p \"%s\" -w -o pascal \"%s\""%(sampledir,ename))
+        print "./sandbox_exec -p \"%s\" -w -o pascal \"%s\""%(sampledir,ename)
     if (item[-4:] == "java"):
         pname = item
         ename = item[0:-5]
