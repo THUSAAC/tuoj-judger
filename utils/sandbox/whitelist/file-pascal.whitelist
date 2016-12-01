@@ -1,7 +1,11 @@
 >/dev/tty -1
 >/etc/ld.so.cache -1
+>/home/laekov/tuoj/tuoj-judger/utils/sandbox/samples/input.txt -1
+>/home/laekov/tuoj/tuoj-judger/utils/sandbox/samples/output.txt -1
 >/lib/x86_64-linux-gnu/libc.so.6 -1
 >/lib/x86_64-linux-gnu/libdl.so.2 -1
 >/lib/x86_64-linux-gnu/libtinfo.so.5 -1
+>/usr/lib/locale/UTF-8/LC_CTYPE -1
 >/usr/lib/locale/locale-archive -1
 >/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache -1
+>/usr/share/locale/locale.alias -1

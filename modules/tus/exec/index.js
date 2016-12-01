@@ -68,9 +68,11 @@ module.exports = function(cmd, data) {
 			options.lType = 'java';
             // options.memLimit = '999999999999999';
 			//options.args.push('Main');
-		} else if (data.lang === 'g++' || data.lang === 'gcc' || data.lang === 'pascal') {
+		} else if (data.lang === 'g++' || data.lang === 'gcc') {
 			options.lType = 'cpp';
-        }
+        } else if (data.lang === 'pascal') {
+			options.lType = 'pascal';
+		}
         var runRes = exec.exec(options);
         if (!runRes || runRes.error) {
             var errMsg = 'run error ' + runRes.error;
