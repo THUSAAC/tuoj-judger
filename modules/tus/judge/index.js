@@ -41,10 +41,10 @@ module.exports = function(cmd, data) {
         }
         var targetPath = path.resolve(self.path, 'res');
         try {
-            if (!self.source.target) {
-                if (!self.source) {
-                    throw 'illegal judge script at step ' + self.tusStep;
-                }
+			if (!self.source) {
+				throw 'illegal judge script at step ' + self.tusStep;
+			}
+			if (!self.source.target) {
                 throw String(self.source.error);
             }
             fs.mkdirSync(self.path);

@@ -41,6 +41,7 @@ module.exports = function(cmd, data) {
 				fs.chmodSync(path.resolve(self.path, i + '.in'), 0444);
             }
 		} catch (error) {
+			console.error(error);
 			respond({ message: error, tusStep: self.tusStep, isEnd: cmd.haltOnFail });
             data.res[self.id] = {
                 error: error
@@ -76,6 +77,9 @@ module.exports = function(cmd, data) {
         var runRes = exec.exec(options);
         if (!runRes || runRes.error) {
             var errMsg = 'run error ' + runRes.error;
+            data.res[self.id] = {
+                error: runRes.error
+            };
             respond({ msg: errMsg, isEnd: self.cmd.haltOnFail, tusStep: self.tusStep });
             if (self.cmd.haltOnFail) {
                 return callback(errMsg);
