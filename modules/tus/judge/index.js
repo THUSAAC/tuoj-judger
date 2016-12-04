@@ -75,7 +75,7 @@ module.exports = function(cmd, data) {
                 fs.copySync(path.resolve(self.dataPath, file), path.resolve(self.path, i + '.in'));
             }
         } catch (error) {
-            respond({ message: 'Wrong Answer', extError: error, isEnd: self.cmd.haltOnFail, tusStep: self.tusStep }, function() {
+            respond({ message: 'Wrong Answer', extError: 'Answer not found', isEnd: self.cmd.haltOnFail, tusStep: self.tusStep }, function() {
                 data.scores.push({
 					error: self.source ? self.source.error : 'Wrong Answer',
                     score: 0
@@ -95,7 +95,7 @@ module.exports = function(cmd, data) {
         };
         var runRes = exec.exec(options);
         if (!runRes || runRes.error) {
-            var errMsg = 'checker error ' + runRes;
+            var errMsg = 'Checker error ' + runRes;
             respond({ message: 'Wrong Answer', extError: errMsg, isEnd: self.cmd.haltOnFail, tusStep: self.tusStep }, function() {
                 data.scores.push({
                     score: 0,
@@ -109,8 +109,15 @@ module.exports = function(cmd, data) {
             fs.ensureFileSync(path.resolve(self.path, 'extInfo'));
             var res = {
                 score: Number(fs.readFileSync(path.resolve(self.path, 'score'))) / 100,
-				extInfo: String(fs.readFileSync(path.resolve(self.path, 'extInfo')))
             };
+			try {
+				var ext = String(fs.readFileSync(path.resolve(self.path, 'extInfo')));
+				console.log(ext);
+				if (ext.match(/^Accept/) === null) {
+					res.extInfo = ext;
+				}
+			} catch (error) {
+			};
             data.scores.push(res);
             respond({ 
                 message: res.score > 0.99 ? 'Accepted' : 'Wrong Answer', 
